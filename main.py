@@ -7,8 +7,8 @@ app = FastAPI()
 
 # مدل را یکبار لود می‌کنیم (بسیار سریع برای 0.5B)
 llm = Llama(
-    model_path="/app/models/qwen2.5-0.5b-instruct-q4_k_m.gguf",
-    # model_path="models/qwen2.5-0.5b-instruct-q4_k_m.gguf",
+    # model_path="/app/models/qwen2.5-0.5b-instruct-q4_k_m.gguf",
+    model_path="models/qwen2.5-0.5b-instruct-q4_k_m.gguf",
     n_ctx=2048,
     n_threads=8,        # اگر CPU بیشتر داری بیشتر کن
     verbose=False
@@ -100,6 +100,12 @@ Correct output format:
     text = out["choices"][0]["text"]
     data = extract_json(text)
     return data or {"error": "Invalid JSON", "raw": text}
+
+
+@app.on_event("startup")
+def load_model_once():
+    llm("hello", max_tokens=1)  # warmup
+
 
 
 # http://127.0.0.1:8000/skills?role=DevOps  test skill 
