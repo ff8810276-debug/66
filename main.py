@@ -7,7 +7,8 @@ app = FastAPI()
 
 # مدل را یکبار لود می‌کنیم (بسیار سریع برای 0.5B)
 llm = Llama(
-    model_path="models/qwen2.5-0.5b-instruct-q4_k_m.gguf",
+    model_path="/app/models/qwen2.5-0.5b-instruct-q4_k_m.gguf",
+    # model_path="models/qwen2.5-0.5b-instruct-q4_k_m.gguf",
     n_ctx=2048,
     n_threads=8,        # اگر CPU بیشتر داری بیشتر کن
     verbose=False
